@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light">
+    <script>
+      {
+        const savedTheme = localStorage.getItem("color-theme") || "dark";
+        document.documentElement.classList.toggle("light-theme", savedTheme === "light");
+        // Also update the meta tag immediately
+        document.addEventListener("DOMContentLoaded", () => {
+          const meta = document.querySelector('meta[name="color-scheme"]');
+          if (meta) meta.content = savedTheme;
+        });
+      }
+    </script>
+    <title>Dan Senga — Software Engineer</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+

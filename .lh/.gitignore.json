@@ -1,0 +1,18 @@
+{
+    "sourceFile": ".gitignore",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1786572726087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1786572726087,
+            "name": "Commit-0",
+            "content": "# Ignore Markdown project notes locally\n*.md\n\n# Node / frontend\nnode_modules/\nfrontend/node_modules/\nfrontend/dist/\n\n# Python / backend\n__pycache__/\n*.py[cod]\nvenv/\n.venv/\nbackend/.venv/\n\n# Local env files\n.env\n.env.*\n\n# OS files\n.DS_Store\nThumbs.db\n"
+        }
+    ]
+}
