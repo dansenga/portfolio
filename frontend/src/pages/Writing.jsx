@@ -65,14 +65,14 @@ const Writing = () => {
             onClick={(e) => handleArticleClick(e, article.slug)}
           >
             <div className="article-meta">
-              <span className="date">{new Date(article.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+              <span className="date">{new Date(article.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
               <span className="category-dot">•</span>
               <span className="category">{article.category}</span>
             </div>
             <h2 className="article-title">{article.title}</h2>
             <p className="article-excerpt">{article.excerpt}</p>
             <div className="article-footer">
-              <span className="read-time">{article.readingTime} min read</span>
+              <span className="read-time">{article.reading_time_min || 5} min read</span>
             </div>
           </a>
         ))}

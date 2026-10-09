@@ -31,6 +31,10 @@
   position: relative;
   z-index: 1;
   padding-block: var(--space-20);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
 }
 
 .hero__content {
@@ -45,6 +49,16 @@
   letter-spacing: -0.05em;
   color: var(--color-text-primary);
   margin-bottom: var(--space-8);
+}
+
+/* DAN — solid */
+.hero__name-dan {
+  color: var(--color-text-primary);
+}
+
+/* SENGA — solid blue (accent color) */
+.hero__name-senga {
+  color: var(--color-accent-text);
 }
 
 .hero__title {
@@ -77,7 +91,7 @@
   display: flex;
   gap: var(--space-4);
   flex-wrap: wrap;
-  margin-bottom: var(--space-12);
+  margin-bottom: 0;
 }
 
 .hero__btn {
@@ -117,65 +131,86 @@
   transform: translateY(-2px);
 }
 
-.hero__scroll-indicator {
-  position: absolute;
-  bottom: var(--space-8);
-  left: 50%;
-  transform: translateX(-50%);
+/* ── Tech Logo Grid ── */
+.hero__tech {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  color: var(--color-text-tertiary);
+  justify-content: center;
+  width: 100%;
 }
 
-.hero__scroll-label {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--color-text-tertiary);
+.tech-grid-logos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 480px;
 }
 
-.hero__scroll-track {
+.tech-logo-cell {
   position: relative;
-  width: 42px;
-  height: 64px;
-  border: 1px solid rgba(148, 163, 184, 0.45);
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.18);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
-  overflow: hidden;
+  aspect-ratio: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  transition: all var(--duration-normal) var(--ease-out);
+  cursor: pointer;
+  animation: logoPulse 4s infinite ease-in-out alternate;
 }
 
-.hero__scroll-thumb {
+.tech-logo-cell img {
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
+  transition: transform var(--duration-fast) var(--ease-out), filter var(--duration-fast) var(--ease-out);
+  /* Optionally make them grayscale until hover, depending on theme */
+  /* filter: grayscale(100%) opacity(0.8); */
+}
+
+.tech-logo-cell:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-border-hover);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  z-index: 2;
+}
+
+.tech-logo-cell:hover img {
+  transform: scale(1.15);
+  /* filter: grayscale(0%) opacity(1); */
+}
+
+.tech-logo-cell__name {
   position: absolute;
+  bottom: -28px;
   left: 50%;
-  top: 12px;
-  width: 8px;
-  height: 16px;
   transform: translateX(-50%);
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(96, 165, 250, 1), rgba(59, 130, 246, 0.6));
-  box-shadow: 0 0 18px rgba(59, 130, 246, 0.55);
-  animation: scroll-thumb 1.8s ease-in-out infinite;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
 }
 
-@keyframes scroll-thumb {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -4px);
-  }
-  20% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 1;
-    transform: translate(-50%, 18px);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, 28px);
-  }
+.tech-logo-cell:hover .tech-logo-cell__name {
+  opacity: 1;
+  transform: translateX(-50%) translateY(4px);
+}
+
+@keyframes logoPulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+  50% { box-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.02); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
 }
 
 /* ── Section Labels ── */
@@ -460,8 +495,28 @@
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    padding-block: var(--space-12);
+  }
+
   .hero__name {
     font-size: clamp(3.5rem, 15vw, 6rem);
+  }
+
+  .hero__tech {
+    order: 2;
+  }
+
+  .tech-grid-logos {
+    max-width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-3);
+  }
+
+  .tech-logo-cell {
+    animation: none;
   }
 
   .featured-item {
@@ -487,5 +542,12 @@
 
   .hero__btn {
     justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .tech-grid-logos {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
   }
 }

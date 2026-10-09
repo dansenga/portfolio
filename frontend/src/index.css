@@ -61,6 +61,17 @@
   --color-border-hover: rgba(255, 255, 255, 0.12);
   --color-border-strong: rgba(255, 255, 255, 0.15);
 
+  /* ── Header / Nav Overlays ── */
+  --color-bg-scrolled: rgba(5, 5, 5, 0.8);
+  --color-bg-overlay: rgba(5, 5, 5, 0.97);
+
+  /* ── Heatmap Colors ── */
+  --color-heatmap-0: var(--color-bg-subtle);
+  --color-heatmap-1: rgba(79, 70, 229, 0.4);
+  --color-heatmap-2: rgba(59, 130, 246, 0.5);
+  --color-heatmap-3: rgba(37, 99, 235, 0.75);
+  --color-heatmap-4: rgba(96, 165, 250, 1);
+
   /* ── Aliases for compatibility ── */
   --bg-primary: var(--color-bg);
   --bg-secondary: var(--color-bg-elevated);
@@ -171,10 +182,10 @@
   --container-narrow: 800px;
 
   /* ── Shadows ── */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
-  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.8);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.9);
   --shadow-blue: 0 4px 20px rgba(37, 99, 235, 0.15);
 }
 
@@ -213,8 +224,8 @@ body {
 .light-theme {
   color-scheme: light;
 
-  --color-bg: var(--white-off);
-  --color-bg-elevated: var(--white-pure);
+  --color-bg: var(--white-pure);
+  --color-bg-elevated: #f9fafb;
   --color-bg-surface: #E8E8EC;
   --color-bg-surface-hover: #DCDCE0;
   --color-bg-subtle: #D1D1D6;
@@ -234,6 +245,20 @@ body {
   --color-border-strong: rgba(0, 0, 0, 0.2);
 
   --color-overlay: rgba(255, 255, 255, 0.8);
+
+  --color-bg-scrolled: rgba(255, 255, 255, 0.85);
+  --color-bg-overlay: rgba(255, 255, 255, 0.97);
+
+  --color-heatmap-0: #e5e7eb;
+  --color-heatmap-1: #93c5fd;
+  --color-heatmap-2: #60a5fa;
+  --color-heatmap-3: #3b82f6;
+  --color-heatmap-4: #2563eb;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
 }
 
 

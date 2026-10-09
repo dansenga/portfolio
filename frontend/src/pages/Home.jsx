@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api';
 import { useFetch } from '../hooks/useFetch';
@@ -8,15 +8,36 @@ export default function Home() {
   const { data: currently } = useFetch(() => api.getCurrently(), []);
   const { data: projects } = useFetch(() => api.getProjects({ featured: true }), []);
   const { data: articles } = useFetch(() => api.getArticles({ published: true, featured: true }), []);
+  const heroRef = useRef(null);
+
+  // Observe hero visibility and dispatch custom event for Layout navbar
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        window.dispatchEvent(
+          new CustomEvent('hero-visibility', { detail: { visible: entry.isIntersecting } })
+        );
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="home">
       {/* ── HERO ── */}
-      <section className="hero">
+      <section className="hero" ref={heroRef}>
         <div className="hero__inner container">
           <div className="hero__content">
             <h1 className="hero__name animate-fadeInUp">
-              DAN<br />SENGA
+              <span className="hero__name-dan">DAN</span>
+              <br />
+              <span className="hero__name-senga">SENGA</span>
             </h1>
             <p className="hero__title animate-fadeInUp animate-delay-2">
               Software Engineer
@@ -38,10 +59,38 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <div className="hero__scroll-indicator animate-fadeInUp animate-delay-8" aria-label="Scroll down">
-            <span className="hero__scroll-label">Scroll</span>
-            <div className="hero__scroll-track">
-              <div className="hero__scroll-thumb"></div>
+
+          {/* ── Tech Logo Grid ── */}
+          <div className="hero__tech animate-fadeInUp animate-delay-6">
+            <div className="tech-grid-logos">
+              {[
+                { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg' },
+                { name: 'PHP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg' },
+                { name: 'Pandas', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg' },
+                { name: 'Laravel', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg' },
+                { name: 'PyTorch', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg' },
+                { name: 'Django', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg' },
+                { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg' },
+                { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg' },
+                { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
+                { name: 'Linux', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg' },
+                { name: 'NumPy', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg' },
+                { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg' },
+                { name: 'TensorFlow', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg' },
+                { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' },
+                { name: 'Jupyter', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg' },
+                { name: 'FastAPI', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg' },
+              ].map((tech, i) => (
+                <div
+                  className="tech-logo-cell"
+                  key={tech.name}
+                  style={{ animationDelay: `${i * 0.08}s` }}
+                  title={tech.name}
+                >
+                  <img src={tech.icon} alt={tech.name} loading="lazy" />
+                  <span className="tech-logo-cell__name">{tech.name}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

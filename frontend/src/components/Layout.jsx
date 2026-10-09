@@ -62,6 +62,12 @@ const LinkedinIcon = () => (
   </svg>
 );
 
+const XIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+);
+
 const EmailIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
@@ -190,10 +196,27 @@ export default function Layout({ children }) {
   const [scrolled, setScrolled] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(false);
   const [isLight, setIsLight] = useState(() => {
     return document.documentElement.classList.contains('light-theme');
   });
   const location = useLocation();
+
+  // Listen for hero visibility events from Home page
+  useEffect(() => {
+    const handleHeroVisibility = (e) => {
+      setHeroVisible(e.detail.visible);
+    };
+    window.addEventListener('hero-visibility', handleHeroVisibility);
+    return () => window.removeEventListener('hero-visibility', handleHeroVisibility);
+  }, []);
+
+  // Reset heroVisible when navigating away from home
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setHeroVisible(false);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -243,7 +266,7 @@ export default function Layout({ children }) {
       <ReadingProgressBar />
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
         <div className={styles.headerContainer}>
-          <Link to="/" className={styles.brand}>DAN SENGA</Link>
+          <Link to="/" className={`${styles.brand} ${heroVisible ? styles.brandHidden : ''}`}>DAN SENGA</Link>
           
           <nav className={styles.desktopNav}>
             {navLinks.map(link => (
@@ -325,9 +348,10 @@ export default function Layout({ children }) {
             </div>
             
             <div className={styles.socialRow}>
-              <a href="#" aria-label="GitHub"><GithubIcon /></a>
-              <a href="#" aria-label="LinkedIn"><LinkedinIcon /></a>
-              <a href="#" aria-label="Email"><EmailIcon /></a>
+              <a href="https://github.com/dansenga" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><GithubIcon /></a>
+              <a href="https://www.linkedin.com/in/dan-senga-099569376" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><LinkedinIcon /></a>
+              <a href="https://x.com/dan_senga7" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><XIcon /></a>
+              <a href="mailto:dansenga455@gmail.com" aria-label="Email"><EmailIcon /></a>
             </div>
             
             <div className={styles.copyright}>

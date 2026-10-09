@@ -105,10 +105,11 @@ def seed_db():
     if db.query(models.ExternalLink).count() == 0:
         links = [
             models.ExternalLink(platform="GitHub", url="https://github.com/dansenga", username="dansenga", display_order=1),
-            models.ExternalLink(platform="LinkedIn", url="https://linkedin.com/", display_order=2),
-            models.ExternalLink(platform="Medium", url="https://medium.com/", display_order=3),
+            models.ExternalLink(platform="LinkedIn", url="https://www.linkedin.com/in/dan-senga-099569376", username="dan-senga", display_order=2),
+            models.ExternalLink(platform="X", url="https://x.com/dan_senga7", username="dan_senga7", display_order=3),
             models.ExternalLink(platform="Kaggle", url="https://www.kaggle.com/dansenga", username="dansenga", display_order=4),
-            models.ExternalLink(platform="Email", url="mailto:dan@example.com", display_order=5)
+            models.ExternalLink(platform="Email", url="mailto:dansenga455@gmail.com", display_order=5),
+            models.ExternalLink(platform="Medium", url="https://medium.com/", display_order=6)
         ]
         db.add_all(links)
 

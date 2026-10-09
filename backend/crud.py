@@ -294,12 +294,32 @@ def get_activity_snapshot(db: Session):
         github_events = []
 
     try:
-        github_html = _fetch_text(github_url)
-        contribution_matches = re.findall(
-            r'data-date="([^"]+)"[^>]*data-count="(\d+)"', github_html
-        )
-        for date_value, count_value in contribution_matches[-365:]:
-            count = int(count_value)
+        github_html = _fetch_text(f"https://github.com/users/{github_username}/contributions")
+        contribution_matches = []
+
+        for pattern in (
+            r'data-date="([^"]+)"[^>]*data-level="(\d+)"[^>]*data-count="(\d+)"',
+            r'data-date="([^"]+)"[^>]*data-count="(\d+)"',
+            r'data-date="([^"]+)"[^>]*data-level="(\d+)"',
+        ):
+            found = re.findall(pattern, github_html)
+            if found:
+                contribution_matches = found
+                break
+
+        for match in contribution_matches[-365:]:
+            if len(match) == 3:
+                date_value, level_value, count_value = match
+                count = int(count_value) if count_value else max(0, int(level_value) * 2)
+            elif len(match) == 2:
+                date_value, second_value = match
+                if second_value.isdigit():
+                    count = int(second_value)
+                else:
+                    count = max(0, int(second_value) * 2)
+            else:
+                continue
+
             github_days.append(
                 {
                     "date": date_value,
@@ -319,12 +339,13 @@ def get_activity_snapshot(db: Session):
     if github_total == 0:
         try:
             total_text_match = re.search(
-                r"(\d+) contributions? in the last year",
-                _html_to_text(_fetch_text(github_url)) if github_url else "",
+                r"(\d+)\s+contributions?\s+in the last year",
+                _html_to_text(github_html),
+                re.IGNORECASE
             )
-        except (HTTPError, URLError, TimeoutError, ValueError):
-            total_text_match = None
-        github_total = int(total_text_match.group(1)) if total_text_match else 0
+            github_total = int(total_text_match.group(1)) if total_text_match else 0
+        except Exception:
+            pass
 
     top_repos = sorted(
         github_repos,
