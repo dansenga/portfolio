@@ -39,9 +39,9 @@ const ArticleDetail = () => {
         <div className="article-meta">
           <span className="category">{article.category}</span>
           <span className="dot">•</span>
-          <span className="date">{new Date(article.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+          <span className="date">{new Date(article.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
           <span className="dot">•</span>
-          <span className="read-time">{article.readingTime} min read</span>
+          <span className="read-time">{article.reading_time_min || 5} min read</span>
         </div>
         <h1 className="title">{article.title}</h1>
         {article.subtitle && <p className="subtitle">{article.subtitle}</p>}
@@ -74,7 +74,7 @@ const ArticleDetail = () => {
               {related.filter(r => r.id !== article.id).slice(0, 2).map(r => (
                 <Link to={`/writing/${r.slug}`} key={r.id} className="related-item">
                   <h4>{r.title}</h4>
-                  <span>{r.readingTime} min read</span>
+                  <span>{r.reading_time_min || 5} min read</span>
                 </Link>
               ))}
             </div>

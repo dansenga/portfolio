@@ -202,6 +202,11 @@ export default function Layout({ children }) {
   });
   const location = useLocation();
 
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   // Listen for hero visibility events from Home page
   useEffect(() => {
     const handleHeroVisibility = (e) => {
