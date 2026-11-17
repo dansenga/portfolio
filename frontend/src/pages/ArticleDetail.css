@@ -1,5 +1,5 @@
 .article-detail {
-  padding: var(--spacing-xl) var(--spacing-lg);
+  padding: calc(var(--navbar-height, 80px) + var(--spacing-xl)) var(--spacing-lg) var(--spacing-xl);
   max-width: 700px;
   margin: 0 auto;
 }
