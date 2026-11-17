@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/((?!api|assets|favicon|icons|certifications|MyPhoto|.*\\..*).*)",
-      "destination": "/index.html"
-    }
-  ]
-}
